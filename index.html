@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monkey type Clone - Test your typing skills</title>
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --green: #00b755;
+        --yellow: #daaf38;
+        --red: #ca4754;
+        --black: #222;
+        --gray: #999;
+      }
+
+      body {
+        background-color: var(--black);
+        font-family: Menlo, monospace;
+        display: grid;
+        justify-content: center;
+        color: #fff;
+        margin-top: 32px;
+        padding: 16px;
+      }
+
+      section {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-width: 500px;
+      }
+
+      time {
+        color: var(--yellow);
+      }
+
+      input {
+        z-index: -999;
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        /* opacity: 0; */
+      }
+
+      p {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px 12px;
+        margin: 0;
+      }
+
+      letter {
+        color: var(--gray);
+        position: relative;
+
+        &.active::before {
+          content: '|';
+          color: var(--yellow);
+          font-size: 14px;
+          position: absolute;
+          left: -50%;
+          animation: 1s blink infinite ease-in-out;
+        }
+        &.correct {
+          color: var(--green);
+        }
+        &.incorrect {
+          color: var(--red);
+        }
+      }
+
+      @keyframes blink {
+        0%,
+        25% {
+          opacity: 0.5;
+        }
+
+        50% {
+          opacity: 0.7;
+        }
+
+        75% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Monkey</h1>
+
+      <section id="game">
+        <time> </time>
+        <p></p>
+        <input autofocus />
+      </section>
+    </main>
+  </body>
+
+  <script>
+    // let's recover the html elements with the dom.
+
+    const $time = document.querySelector('time')
+    const $paragraph = document.querySelector('p')
+    const $input = document.querySelector('input')
+
+    // we need to have an initial time
+    const INITIAL_TIME = 60
+
+    //this is the initial text
+    const TEXT =
+      'Learning A1 English feels like trying to juggle biscuits while riding a bicycle, and still people are pretending to do it is less of a month like they were learning to tie they shoes'
+
+    //state of the game
+    let words = []
+    let currentTime = INITIAL_TIME
+
+    //keep in mind that you need to call the functions so let's do
+
+    initGame()
+    initEvents()
+
+    //we need to start the game with a function
+    // let's see the logic.
+    //  1.the text needs to be transform into an array. (tTEXT.SPLIT) recover just 32 words from the other array.
+    function initGame() {
+      words = TEXT.split(' ').slice(0, 32)
+      currentTime = INITIAL_TIME
+
+      //we need to render the time in the screen
+      $time.textContent = currentTime
+
+      $paragraph.innerHTML = words
+        .map((word, index) => {
+          const letters = word.split('')
+
+          return `<word>
+          ${letters.map((letter) => `<letter>${letter}</letter>`).join('')}
+          </word>`
+        })
+        .join('')
+
+      const $firstWord = $paragraph.querySelector('word')
+      $firstWord.classList.add('active')
+      $firstWord.querySelector('letter').classList.add('active')
+
+      const intervalId = setInterval(() => {
+        currentTime--
+        $time.textContent = currentTime
+
+        if (currentTime === 0) {
+          clearInterval(intervalId)
+          gameOver()
+        }
+      }, 1000)
+    }
+
+    function initEvents() {
+      document.addEventListener('keydown', () => {
+        $input.focus()
+      })
+      $input.addEventListener('keydown', onkeyDown)
+      $input.addEventListener('keyup', onkeyUp)
+    }
+
+    function onkeyDown() {}
+
+    function onkeyUp() {
+      // get current elements
+      const $currentWord = $paragraph.querySelector('word.active')
+      const $currentLetter = $currentWord.querySelector('letter.active')
+
+      const currentWord = $currentWord.innerText.trim()
+      $input.maxLength = currentWord.length
+
+      // console.log({ value: $input.value, currentWord })
+
+      const $allLetters = $currentWord.querySelectorAll('letter')
+
+      $allLetters.forEach(($letter) =>
+        $letter.classList.remove('correct', 'incorrect')
+      )
+
+      $input.value.split('').forEach((char, index) => {
+        const $letter = $allLetters[index]
+        const letterToCheck = currentWord[index]
+
+        const isCorrect = char === letterToCheck
+        const letterClass = isCorrect ? 'correct' : 'incorrect'
+        $letter.classList.add(letterClass)
+      })
+    }
+
+    function gameOver() {
+      console.log('game over my so!')
+    }
+    console.log
+  </script>
+</html>

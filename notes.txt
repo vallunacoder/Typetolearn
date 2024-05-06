@@ -1,0 +1,52 @@
+
+is it  not necessary to have an html body to start writing your project.
+
+
+2) start with customs  property
+
+3) set font-style :
+4) center an element using :
+
+display : grid
+justify-content: center
+
+5) start thinking about how the game is going to look like and what are the things that you need for it to work properly so you can start building those things in your html!
+
+
+6) Determine which elements from your html you need to recover in order to have your program working properly.
+
+For instances think about which element are changing.
+
+Or think about the  elements target to interact with the user.
+
+
+For this page we are using querySelector to access to the page elements through the Dom.
+
+
+7) can you invoke a function before creating it ?
+
+yes you can!
+
+
+8) why the dollar ?? $ it is a nice way to know that it is a dom element like $time.
+
+9) what are the customs elements ?
+x-word!
+
+5/05/2024
+
+Is there any problem about using a tag that doesn't exist.
+Well there is not a problem- but you should use a custom element.
+
+but using tag just like a:word. it's kind of risky. 
+
+10) Use querySelector when you want to get the first element with a class. like word.
+ use querySelector all when you want all the elements with the same name or tag.
+
+ 11) You have to think on the default behavior or certain things in the parameter of the website.
+
+ 12) I lost an hours trying to sole the mystery of doble quotes
+
+ !3) I'm thinking that it would be cool to have a project where I could
+ have phrases for a1 learners and the  unblock the meaning of them!
+ if they got the right in the monkey keyboard.
